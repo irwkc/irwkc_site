@@ -75,10 +75,7 @@ export function TildaParody({
       <div
         aria-hidden
         className="pointer-events-none relative z-20 h-[28vh] bg-[#030712] md:h-[32vh]"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_120%,rgba(99,102,241,0.18),transparent_55%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#030712]/40" />
-      </div>
+      />
 
       <div ref={revealRef} className="tilda-reveal relative">
         <div
@@ -211,9 +208,7 @@ export function TildaParody({
       <div
         aria-hidden
         className="pointer-events-none relative z-20 h-[24vh] bg-[#030712] md:h-[28vh]"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-20%,rgba(99,102,241,0.16),transparent_55%)]" />
-      </div>
+      />
     </section>
   );
 }

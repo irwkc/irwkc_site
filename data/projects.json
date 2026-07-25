@@ -1,0 +1,54 @@
+[
+  {
+    "id": "sketch-verde",
+    "title": "Скетч и Верде",
+    "category": "ресторан и кафе",
+    "description": "Сайты ресторана Скетч и кафе Верде — меню, атмосфера и бронирование в единой визуальной системе.",
+    "repo": "https://github.com/irwkc/sketch-verde_site",
+    "repoPrivate": false,
+    "appStore": "",
+    "sites": ["https://verde-rzn.ru", "https://sketch-rest.ru"],
+    "stack": ["Next.js", "React", "TypeScript", "Tailwind"],
+    "order": 0,
+    "gradient": "from-amber-600/25 to-orange-700/10"
+  },
+  {
+    "id": "ekp",
+    "title": "Творческая мастерская",
+    "category": "мастерская",
+    "description": "Сайт творческой мастерской с акцентом на работы, процесс и запись.",
+    "repo": "https://github.com/irwkc/EkP_site",
+    "repoPrivate": false,
+    "appStore": "",
+    "sites": ["https://se-art.ru"],
+    "stack": ["React", "TypeScript", "Vite", "Tailwind"],
+    "order": 1,
+    "gradient": "from-rose-600/20 to-fuchsia-700/10"
+  },
+  {
+    "id": "vn",
+    "title": "VN",
+    "category": "лендинг модели",
+    "description": "Fashion-first портфолио модели: кинематографичный storytelling, 3D-навигация и RU/EN.",
+    "repo": "https://github.com/irwkc/VictoriaNekrasova_site",
+    "repoPrivate": false,
+    "appStore": "",
+    "sites": ["https://victorianekrasova.ru"],
+    "stack": ["React", "TypeScript", "Three.js", "Vite"],
+    "order": 2,
+    "gradient": "from-violet-600/20 to-indigo-700/10"
+  },
+  {
+    "id": "notific",
+    "title": "Notific",
+    "category": "личный веб сервис",
+    "description": "Сервис уведомлений и подписок: веб, iOS-приложение и личный кабинет для событий.",
+    "repo": "",
+    "repoPrivate": true,
+    "appStore": "https://apps.apple.com/app/id6760315021",
+    "sites": ["https://notific.ru"],
+    "stack": ["Swift", "TypeScript", "Node.js", "PostgreSQL"],
+    "order": 3,
+    "gradient": "from-cyan-600/20 to-blue-700/10"
+  }
+]

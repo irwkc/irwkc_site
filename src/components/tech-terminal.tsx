@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { techStack, projects } from "@/data/site";
+import { techStack } from "@/data/site";
+import type { Project } from "@/lib/projects";
 
 type Line =
   | { kind: "input"; text: string }
@@ -10,55 +11,49 @@ type Line =
 
 const PROMPT = "irwkc@portfolio ~ %";
 
-const COMMANDS: Record<string, Line[]> = {
-  stack: [
-    { kind: "output", text: "loaded stack — 12 packages", color: "#86868b" },
-    ...techStack.map((t) => ({
-      kind: "output" as const,
-      text: `  ▸ ${t.name}`,
-      color: t.color === "#ffffff" ? "#f5f5f7" : t.color,
-    })),
-  ],
-  "ls projects": [
-    { kind: "output", text: "projects/", color: "#0a84ff" },
-    ...projects.map((p) => ({
-      kind: "output" as const,
-      text: `  ${p.id}  ${p.title}`,
-      color: "#f5f5f7",
-    })),
-  ],
-  "cat next": [
-    {
-      kind: "output",
-      text: "Next.js — App Router, SSR/SSG, сайты и продукты под ключ.",
-    },
-    {
-      kind: "output",
-      text: "used in: NewFormat, Bruit Noir, codeforge, sketch-verde…",
-      color: "#86868b",
-    },
-  ],
-  "cat swift": [
-    {
-      kind: "output",
-      text: "Swift — iOS-клиенты: notific, Bruit Noir, NewFormat.",
-    },
-  ],
-  "cat prisma": [
-    {
-      kind: "output",
-      text: "Prisma + PostgreSQL — схема, миграции, type-safe ORM.",
-    },
-  ],
-  whoami: [{ kind: "output", text: "irwkc — full-stack developer" }],
-  help: [
-    {
-      kind: "output",
-      text: "commands: stack · ls projects · cat next · cat swift · cat prisma · clear · help",
-      color: "#86868b",
-    },
-  ],
-};
+function staticCommands(): Record<string, Line[]> {
+  return {
+    stack: [
+      { kind: "output", text: "loaded stack — 12 packages", color: "#86868b" },
+      ...techStack.map((t) => ({
+        kind: "output" as const,
+        text: `  ▸ ${t.name}`,
+        color: t.color === "#ffffff" ? "#f5f5f7" : t.color,
+      })),
+    ],
+    "cat next": [
+      {
+        kind: "output",
+        text: "Next.js — App Router, SSR/SSG, сайты и продукты под ключ.",
+      },
+      {
+        kind: "output",
+        text: "used in: NewFormat, Bruit Noir, codeforge, sketch-verde…",
+        color: "#86868b",
+      },
+    ],
+    "cat swift": [
+      {
+        kind: "output",
+        text: "Swift — iOS-клиенты: notific, Bruit Noir, NewFormat.",
+      },
+    ],
+    "cat prisma": [
+      {
+        kind: "output",
+        text: "Prisma + PostgreSQL — схема, миграции, type-safe ORM.",
+      },
+    ],
+    whoami: [{ kind: "output", text: "irwkc — full-stack developer" }],
+    help: [
+      {
+        kind: "output",
+        text: "commands: stack · ls projects · cat next · cat swift · cat prisma · clear · help",
+        color: "#86868b",
+      },
+    ],
+  };
+}
 
 const BOOT: string[] = ["whoami", "stack", "help"];
 
@@ -91,7 +86,32 @@ export function TechTerminal() {
       return;
     }
 
-    const out = COMMANDS[cmd] ?? [
+    let out = staticCommands()[cmd];
+
+    if (cmd === "ls projects") {
+      try {
+        const res = await fetch("/api/projects", { cache: "no-store" });
+        const projects = (await res.json()) as Project[];
+        out = [
+          { kind: "output", text: "projects/", color: "#0a84ff" },
+          ...projects.map((p, i) => ({
+            kind: "output" as const,
+            text: `  ${String(i + 1).padStart(2, "0")}  ${p.title}`,
+            color: "#f5f5f7",
+          })),
+        ];
+      } catch {
+        out = [
+          {
+            kind: "output",
+            text: "failed to read projects",
+            color: "#ff453a",
+          },
+        ];
+      }
+    }
+
+    out ??= [
       {
         kind: "output" as const,
         text: `zsh: command not found: ${cmd}`,
