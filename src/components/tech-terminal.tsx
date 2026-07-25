@@ -207,23 +207,24 @@ export function TechTerminal() {
   return (
     <div ref={rootRef} className="mx-auto w-full max-w-3xl">
       <div
-        className="overflow-hidden rounded-xl border border-white/10 shadow-[0_40px_80px_-24px_rgba(0,0,0,0.85)]"
+        className="overflow-hidden rounded-xl border border-white/10 shadow-[0_24px_48px_-20px_rgba(0,0,0,0.85)] sm:shadow-[0_40px_80px_-24px_rgba(0,0,0,0.85)]"
         onClick={focusInput}
       >
-        <div className="relative flex h-11 items-center bg-[#2b2b2b] px-4">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-            <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-            <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+        <div className="relative flex h-10 items-center bg-[#2b2b2b] px-3 sm:h-11 sm:px-4">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57] sm:h-3 sm:w-3" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e] sm:h-3 sm:w-3" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840] sm:h-3 sm:w-3" />
           </div>
-          <p className="pointer-events-none absolute inset-x-0 text-center font-mono text-[11px] text-white/55">
-            irwkc — zsh — 80×24
+          <p className="pointer-events-none absolute inset-x-0 text-center font-mono text-[10px] text-white/55 sm:text-[11px]">
+            <span className="sm:hidden">irwkc — zsh</span>
+            <span className="hidden sm:inline">irwkc — zsh — 80×24</span>
           </p>
         </div>
 
         <div
           ref={bodyRef}
-          className="relative h-[min(58vh,420px)] overflow-y-auto bg-[#1e1e1e] px-4 py-4 font-mono text-[13px] leading-relaxed text-[#f5f5f7] md:h-[440px] md:px-5 md:text-[14px]"
+          className="relative h-[min(52vh,360px)] overflow-x-auto overflow-y-auto bg-[#1e1e1e] px-3 py-3 font-mono text-[12px] leading-relaxed text-[#f5f5f7] sm:h-[min(58vh,420px)] sm:px-4 sm:py-4 sm:text-[13px] md:h-[440px] md:px-5 md:text-[14px]"
         >
           {lines.map((line, i) => {
             if (line.kind === "blank") {
@@ -231,7 +232,7 @@ export function TechTerminal() {
             }
             if (line.kind === "input") {
               return (
-                <div key={i} className="whitespace-pre-wrap">
+                <div key={i} className="break-all whitespace-pre-wrap">
                   <span className="text-[#28c840]">{PROMPT}</span>{" "}
                   <span>{line.text}</span>
                 </div>
@@ -240,7 +241,7 @@ export function TechTerminal() {
             return (
               <div
                 key={i}
-                className="whitespace-pre-wrap"
+                className="break-all whitespace-pre-wrap"
                 style={{ color: line.color ?? "#f5f5f7" }}
               >
                 {line.text}
@@ -248,7 +249,7 @@ export function TechTerminal() {
             );
           })}
 
-          <div className="flex whitespace-pre-wrap">
+          <div className="flex min-w-0 flex-wrap break-all whitespace-pre-wrap">
             <span className="text-[#28c840]">{PROMPT}</span>
             <span className="ml-1">{currentLine}</span>
             <span className="ml-0.5 inline-block h-[1.05em] w-[0.55ch] translate-y-[2px] bg-[#f5f5f7] animate-pulse" />

@@ -23,7 +23,7 @@ function ProjectDetail({
   index: number;
 }) {
   return (
-    <div className="glass relative min-h-[320px] overflow-hidden rounded-3xl p-7 md:min-h-[360px] md:p-9">
+    <div className="glass relative min-h-0 overflow-hidden rounded-2xl p-5 sm:min-h-[320px] sm:rounded-3xl sm:p-7 md:min-h-[360px] md:p-9">
       <div
         className={cn(
           "absolute inset-0 bg-gradient-to-br opacity-60",
@@ -35,20 +35,22 @@ function ProjectDetail({
         <span className="font-mono text-sm text-accent">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <h3 className="mt-2 text-2xl font-bold md:text-3xl">{project.title}</h3>
-        <p className="mt-1 text-muted">{project.category}</p>
+        <h3 className="mt-2 text-xl font-bold sm:text-2xl md:text-3xl">
+          {project.title}
+        </h3>
+        <p className="mt-1 text-sm text-muted sm:text-base">{project.category}</p>
         {project.description && (
-          <p className="mt-5 text-base leading-relaxed text-muted/90">
+          <p className="mt-4 text-sm leading-relaxed text-muted/90 sm:mt-5 sm:text-base">
             {project.description}
           </p>
         )}
 
         {project.stack?.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
             {project.stack.map((tech) => (
               <span
                 key={tech}
-                className="rounded-full border border-white/10 px-3 py-1 text-xs font-medium"
+                className="rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-medium sm:px-3 sm:text-xs"
               >
                 {tech}
               </span>
@@ -56,14 +58,14 @@ function ProjectDetail({
           </div>
         )}
 
-        <div className="mt-6 flex flex-wrap items-center gap-2">
+        <div className="mt-5 flex flex-wrap items-center gap-2 sm:mt-6">
           {project.sites.map((site) => (
             <a
               key={site}
               href={site}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-cream px-5 py-2.5 text-sm font-semibold text-[#0f172a] transition-transform hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 rounded-full bg-cream px-4 py-2.5 text-xs font-semibold text-[#0f172a] transition-transform hover:scale-[1.02] sm:px-5 sm:text-sm"
             >
               {siteLabel(site)}
               <ExternalLink className="h-3.5 w-3.5 opacity-70" />
@@ -74,7 +76,7 @@ function ProjectDetail({
               href={project.appStore}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-cream px-5 py-2.5 text-sm font-semibold text-[#0f172a] transition-transform hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 rounded-full bg-cream px-4 py-2.5 text-xs font-semibold text-[#0f172a] transition-transform hover:scale-[1.02] sm:px-5 sm:text-sm"
             >
               App Store
               <ExternalLink className="h-3.5 w-3.5 opacity-70" />
@@ -222,10 +224,12 @@ export function Projects() {
   const selectProject = (i: number) => {
     activeRef.current = i;
     setActive(i);
-    itemRefs.current[i]?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
+    if (window.innerWidth >= 1024) {
+      itemRefs.current[i]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
   };
 
   const current = projects[active];
@@ -237,7 +241,7 @@ export function Projects() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-10 text-4xl font-bold tracking-tight md:mb-14 md:text-6xl"
+          className="mb-8 text-3xl font-bold tracking-tight sm:mb-10 sm:text-4xl md:mb-14 md:text-6xl"
         >
           Проекты
         </motion.h2>
@@ -245,48 +249,64 @@ export function Projects() {
         {!current ? (
           <div className="h-64 animate-pulse rounded-3xl border border-white/8 bg-white/3" />
         ) : (
-          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="flex flex-col gap-3 lg:gap-0">
               {projects.map((project, i) => (
                 <div
                   key={project.id}
                   className="lg:flex lg:min-h-[65vh] lg:items-center"
                 >
-                  <button
-                    ref={(el) => {
-                      itemRefs.current[i] = el;
-                    }}
-                    type="button"
-                    onClick={() => selectProject(i)}
-                    className={cn(
-                      "group flex w-full items-center justify-between rounded-2xl border px-5 py-5 text-left transition-all duration-300 sm:px-6 sm:py-6",
-                      active === i
-                        ? "border-white/30 bg-white/[0.07] shadow-[0_0_48px_-16px_rgba(129,140,248,0.55)]"
-                        : "border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
-                    )}
-                  >
-                    <div>
-                      <p className="font-mono text-xs text-muted">
-                        {String(i + 1).padStart(2, "0")}
-                      </p>
-                      <p className="mt-1 text-lg font-semibold md:text-xl">
-                        {project.title}
-                      </p>
-                      <p className="mt-1 text-sm text-muted">{project.category}</p>
-                    </div>
-                    <ArrowUpRight
+                  <div className="w-full">
+                    <button
+                      ref={(el) => {
+                        itemRefs.current[i] = el;
+                      }}
+                      type="button"
+                      onClick={() => selectProject(i)}
                       className={cn(
-                        "h-5 w-5 shrink-0 transition-transform duration-300",
-                        active === i ? "rotate-45 text-accent" : "opacity-35"
+                        "group flex w-full items-center justify-between rounded-2xl border px-4 py-4 text-left transition-all duration-300 sm:px-6 sm:py-6",
+                        active === i
+                          ? "border-white/30 bg-white/[0.07] shadow-[0_0_48px_-16px_rgba(129,140,248,0.55)]"
+                          : "border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
                       )}
-                    />
-                  </button>
+                    >
+                      <div className="min-w-0 pr-3">
+                        <p className="font-mono text-xs text-muted">
+                          {String(i + 1).padStart(2, "0")}
+                        </p>
+                        <p className="mt-1 truncate text-base font-semibold sm:text-lg md:text-xl">
+                          {project.title}
+                        </p>
+                        <p className="mt-1 text-sm text-muted">
+                          {project.category}
+                        </p>
+                      </div>
+                      <ArrowUpRight
+                        className={cn(
+                          "h-5 w-5 shrink-0 transition-transform duration-300",
+                          active === i ? "rotate-45 text-accent" : "opacity-35"
+                        )}
+                      />
+                    </button>
+
+                    {active === i && (
+                      <div className="mt-3 lg:hidden">
+                        <ProjectDetail project={project} index={i} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
 
-            <div ref={pinWrapRef} className="relative hidden h-full min-h-full lg:block">
-              <div ref={panelRef} className="w-full will-change-[position,top,left,width]">
+            <div
+              ref={pinWrapRef}
+              className="relative hidden h-full min-h-full lg:block"
+            >
+              <div
+                ref={panelRef}
+                className="w-full will-change-[position,top,left,width]"
+              >
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={current.id}
@@ -316,10 +336,6 @@ export function Projects() {
                   ))}
                 </div>
               </div>
-            </div>
-
-            <div className="lg:hidden">
-              <ProjectDetail project={current} index={active} />
             </div>
           </div>
         )}

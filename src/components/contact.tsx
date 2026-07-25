@@ -32,19 +32,19 @@ export function Contact() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-4xl font-bold tracking-tight md:text-6xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-6xl">
             Давайте работать вместе
           </h2>
-          <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-muted md:text-lg">
+          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted sm:mt-6 sm:text-base md:text-lg">
             Есть идея проекта? Напишите в Telegram — отвечу быстрее всего.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
             <a
               href={siteConfig.telegram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3 text-sm font-semibold text-[#0f172a] transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-cream px-6 py-3 text-sm font-semibold text-[#0f172a] transition-transform hover:scale-105"
             >
               <TelegramIcon className="h-4 w-4" />
               {siteConfig.telegramHandle}
@@ -53,7 +53,7 @@ export function Contact() {
               href={siteConfig.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium transition-colors hover:border-white/30 hover:bg-white/5"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium transition-colors hover:border-white/30 hover:bg-white/5"
             >
               <GitHubIcon className="h-4 w-4" />
               GitHub
@@ -67,7 +67,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="mt-14"
+          className="mt-10 sm:mt-14"
         >
           <div className="mb-6">
             <h3 className="text-lg font-semibold">Написать в Telegram</h3>
@@ -78,7 +78,7 @@ export function Contact() {
 
           <form
             onSubmit={handleSubmit}
-            className="glass space-y-5 rounded-3xl p-6 sm:p-8"
+            className="glass space-y-5 rounded-2xl p-5 sm:rounded-3xl sm:p-8"
           >
             <div>
               <label htmlFor="name" className="mb-2 block text-sm font-medium">

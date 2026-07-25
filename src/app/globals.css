@@ -48,8 +48,8 @@ body {
   overflow-x: clip;
 }
 
-/* Тильда-режим: прячем particles, фон соседних секций не трогаем */
-html.tilda-mode [data-chrome="portfolio"] {
+/* Режим кофейни: прячем particles, фон соседних секций не трогаем */
+html.coffee-mode [data-chrome="portfolio"] {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -58,21 +58,21 @@ html.tilda-mode [data-chrome="portfolio"] {
     visibility 0.25s ease;
 }
 
-.tilda-site ::selection {
+.coffee-site ::selection {
   background: rgba(111, 78, 55, 0.25);
   color: #222;
 }
 
-/* Проявление тильда-блока из космоса */
-.tilda-site .tilda-reveal {
-  opacity: calc(0.08 + var(--tilda-reveal, 0) * 0.92);
-  filter: saturate(calc(0.2 + var(--tilda-reveal, 0) * 0.8));
-  transform: translate3d(0, calc((1 - var(--tilda-reveal, 0)) * 28px), 0);
+/* Проявление блока из космоса */
+.coffee-site .coffee-reveal {
+  opacity: calc(0.08 + var(--coffee-reveal, 0) * 0.92);
+  filter: saturate(calc(0.2 + var(--coffee-reveal, 0) * 0.8));
+  transform: translate3d(0, calc((1 - var(--coffee-reveal, 0)) * 28px), 0);
   will-change: opacity, filter, transform;
 }
 
-.tilda-site .tilda-fog-top {
-  height: var(--tilda-fog-top, 70vh);
+.coffee-site .coffee-fog-top {
+  height: var(--coffee-fog-top, 70vh);
   background: linear-gradient(
     to bottom,
     #030712 0%,
@@ -82,8 +82,8 @@ html.tilda-mode [data-chrome="portfolio"] {
   );
 }
 
-.tilda-site .tilda-fog-bottom {
-  height: var(--tilda-fog-bottom, 40vh);
+.coffee-site .coffee-fog-bottom {
+  height: var(--coffee-fog-bottom, 40vh);
   background: linear-gradient(
     to top,
     #030712 0%,
@@ -155,7 +155,7 @@ html.tilda-mode [data-chrome="portfolio"] {
 }
 
 .section-padding {
-  @apply px-6 py-24 md:px-12 lg:px-20 xl:px-32;
+  @apply px-4 py-16 sm:px-6 sm:py-20 md:px-12 md:py-24 lg:px-20 xl:px-32;
 }
 
 .hero .hero-line,

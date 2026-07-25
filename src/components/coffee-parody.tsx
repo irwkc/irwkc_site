@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 
-export function TildaParody({
+export function CoffeeParody({
   onActiveChange,
 }: {
   onActiveChange?: (active: boolean) => void;
@@ -19,9 +19,9 @@ export function TildaParody({
       const rect = light.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Header только пока на экране сам светлый тильда-блок (не космические зоны)
+      // Header только пока на экране светлый блок (не космические зоны)
       const active = rect.top < 36 && rect.bottom > vh * 0.42;
-      document.documentElement.classList.toggle("tilda-mode", active);
+      document.documentElement.classList.toggle("coffee-mode", active);
       onActiveChange?.(active);
 
       const enter = Math.min(
@@ -34,13 +34,13 @@ export function TildaParody({
       );
       const reveal = Math.min(enter, leave);
 
-      el.style.setProperty("--tilda-reveal", reveal.toFixed(3));
+      el.style.setProperty("--coffee-reveal", reveal.toFixed(3));
       el.style.setProperty(
-        "--tilda-fog-top",
+        "--coffee-fog-top",
         `${Math.max(0, (1 - enter) * 72).toFixed(1)}vh`
       );
       el.style.setProperty(
-        "--tilda-fog-bottom",
+        "--coffee-fog-bottom",
         `${Math.max(0, (1 - leave) * 56).toFixed(1)}vh`
       );
     };
@@ -52,7 +52,7 @@ export function TildaParody({
     return () => {
       window.removeEventListener("scroll", sync);
       window.removeEventListener("resize", sync);
-      document.documentElement.classList.remove("tilda-mode");
+      document.documentElement.classList.remove("coffee-mode");
       onActiveChange?.(false);
     };
   }, [onActiveChange]);
@@ -61,33 +61,32 @@ export function TildaParody({
     <section
       ref={sectionRef}
       id="not-this"
-      className="tilda-site relative z-10"
+      className="coffee-site relative z-10"
       style={
         {
           fontFamily: "Arial, Helvetica, sans-serif",
-          "--tilda-reveal": "0",
-          "--tilda-fog-top": "70vh",
-          "--tilda-fog-bottom": "40vh",
+          "--coffee-reveal": "0",
+          "--coffee-fog-top": "70vh",
+          "--coffee-fog-bottom": "40vh",
         } as CSSProperties
       }
     >
-      {/* Космический вход — пока секция внизу, виден только космос */}
       <div
         aria-hidden
-        className="pointer-events-none relative z-20 h-[28vh] bg-[#030712] md:h-[32vh]"
+        className="pointer-events-none relative z-20 h-[22vh] bg-[#030712] sm:h-[28vh] md:h-[32vh]"
       />
 
-      <div ref={revealRef} className="tilda-reveal relative">
+      <div ref={revealRef} className="coffee-reveal relative">
         <div
           aria-hidden
-          className="tilda-fog-top pointer-events-none absolute inset-x-0 top-0 z-30"
+          className="coffee-fog-top pointer-events-none absolute inset-x-0 top-0 z-30"
         />
         <div
           aria-hidden
-          className="tilda-fog-bottom pointer-events-none absolute inset-x-0 bottom-0 z-30"
+          className="coffee-fog-bottom pointer-events-none absolute inset-x-0 bottom-0 z-30"
         />
 
-        <div className="relative bg-[#f7f2eb] px-6 pb-20 pt-28 text-center md:px-12 md:pb-28 md:pt-32">
+        <div className="relative bg-[#f7f2eb] px-4 pb-16 pt-24 text-center sm:px-6 sm:pb-20 sm:pt-28 md:px-12 md:pb-28 md:pt-32">
           <div
             className="pointer-events-none absolute inset-0 opacity-50"
             style={{
@@ -96,19 +95,19 @@ export function TildaParody({
             }}
           />
           <div className="relative mx-auto max-w-xl">
-            <p className="mb-3 text-[12px] uppercase tracking-[0.2em] text-[#6f4e37]">
+            <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-[#6f4e37] sm:text-[12px]">
               Уютная кофейня в центре
             </p>
-            <h2 className="text-[32px] font-bold leading-tight text-[#222] md:text-[48px]">
+            <h2 className="text-[26px] font-bold leading-tight text-[#222] sm:text-[32px] md:text-[48px]">
               Сайт для &quot;плюса&quot;
               <br />
               <span className="text-[#ff0000]">не продаёт</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-[#666] md:text-[17px]">
+            <p className="mx-auto mt-4 max-w-md text-[14px] leading-relaxed text-[#666] sm:text-[15px] md:text-[17px]">
               Авторские напитки, домашняя выпечка и тёплая атмосфера. Приходите
               за чашкой настроения.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <button
                 type="button"
                 className="rounded-none bg-[#6f4e37] px-6 py-3 text-[14px] font-medium text-white"
@@ -142,7 +141,7 @@ export function TildaParody({
           ].map((item) => (
             <div
               key={item.title}
-              className="border-b border-[#e8ddd0] px-6 py-10 text-center md:border-b-0 md:border-r md:last:border-r-0"
+              className="border-b border-[#e8ddd0] px-5 py-8 text-center sm:px-6 sm:py-10 md:border-b-0 md:border-r md:last:border-r-0"
             >
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#f3ebe3] text-[#6f4e37]">
                 ★
@@ -161,23 +160,25 @@ export function TildaParody({
             ["7:00", "открыты"],
             ["4.9", "рейтинг"],
           ].map(([n, l]) => (
-            <div key={l} className="px-2 py-8">
-              <div className="text-[22px] font-bold md:text-[32px]">{n}</div>
-              <div className="mt-1 text-[11px] uppercase tracking-wider text-white/80">
+            <div key={l} className="px-1 py-6 sm:px-2 sm:py-8">
+              <div className="text-[18px] font-bold sm:text-[22px] md:text-[32px]">
+                {n}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-wider text-white/80 sm:text-[11px]">
                 {l}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-[#faf7f3] px-6 py-16 text-center md:px-12">
-          <h3 className="text-[24px] font-bold text-[#222] md:text-[28px]">
+        <div className="bg-[#faf7f3] px-4 py-12 text-center sm:px-6 sm:py-16 md:px-12">
+          <h3 className="text-[20px] font-bold text-[#222] sm:text-[24px] md:text-[28px]">
             До сих пор хотите забронировать столик?)
           </h3>
-          <p className="mt-2 text-[14px] text-[#777]">
+          <p className="mt-2 text-[13px] text-[#777] sm:text-[14px]">
             И мы подтвердим бронь в ближайшее время
           </p>
-          <div className="mx-auto mt-6 flex max-w-lg flex-col gap-3 sm:flex-row">
+          <div className="mx-auto mt-6 flex max-w-lg flex-col gap-3">
             <input
               readOnly
               tabIndex={-1}
@@ -192,22 +193,21 @@ export function TildaParody({
             />
             <button
               type="button"
-              className="shrink-0 bg-[#6f4e37] px-5 py-2.5 text-[14px] font-medium text-white"
+              className="w-full bg-[#6f4e37] px-5 py-2.5 text-[14px] font-medium text-white sm:w-auto"
             >
               Отправить
             </button>
           </div>
         </div>
 
-        <div className="bg-[#222] px-4 py-4 text-center text-[11px] text-white/50">
+        <div className="bg-[#222] px-4 py-4 text-center text-[10px] leading-relaxed text-white/50 sm:text-[11px]">
           © 2024 COFFEE HOUSE. Все права защищены. Сделано на сами знаете чём
         </div>
       </div>
 
-      {/* Космический выход обратно в портфолио */}
       <div
         aria-hidden
-        className="pointer-events-none relative z-20 h-[24vh] bg-[#030712] md:h-[28vh]"
+        className="pointer-events-none relative z-20 h-[20vh] bg-[#030712] sm:h-[24vh] md:h-[28vh]"
       />
     </section>
   );

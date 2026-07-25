@@ -8,7 +8,7 @@ import { TelegramIcon } from "./icons/telegram";
 import { siteConfig, navLinks } from "@/data/site";
 import { cn } from "@/lib/utils";
 
-export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
+export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -19,28 +19,37 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
   }, []);
 
   useEffect(() => {
-    if (tildaMode) setMenuOpen(false);
-  }, [tildaMode]);
+    if (coffeeMode) setMenuOpen(false);
+  }, [coffeeMode]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
 
   return (
     <>
       <header
         className={cn(
           "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
-          tildaMode
-            ? "bg-white py-3 shadow-sm"
+          coffeeMode
+            ? "bg-white py-2.5 shadow-sm sm:py-3"
             : scrolled
               ? "glass py-3"
-              : "bg-transparent py-5"
+              : "bg-transparent py-4 sm:py-5"
         )}
         style={
-          tildaMode ? { fontFamily: "Arial, Helvetica, sans-serif" } : undefined
+          coffeeMode ? { fontFamily: "Arial, Helvetica, sans-serif" } : undefined
         }
       >
-        {tildaMode ? (
-          <div className="flex w-full items-center justify-between px-4 text-[13px] text-[#222] md:px-10">
-            <div className="flex items-center gap-6">
-              <span className="text-[15px] font-bold tracking-tight">
+        {coffeeMode ? (
+          <div className="flex w-full items-center justify-between gap-3 px-3 text-[12px] text-[#222] sm:px-4 sm:text-[13px] md:px-10">
+            <div className="flex min-w-0 items-center gap-4 sm:gap-6">
+              <span className="shrink-0 text-[14px] font-bold tracking-tight sm:text-[15px]">
                 COFFEE HOUSE
               </span>
               <nav className="hidden gap-5 text-[#555] sm:flex">
@@ -51,9 +60,10 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
             </div>
             <button
               type="button"
-              className="rounded-none bg-[#6f4e37] px-3 py-1.5 text-[12px] font-medium text-white"
+              className="shrink-0 rounded-none bg-[#6f4e37] px-2.5 py-1.5 text-[11px] font-medium text-white sm:px-3 sm:text-[12px]"
             >
-              Забронировать стол
+              <span className="sm:hidden">Бронь</span>
+              <span className="hidden sm:inline">Забронировать стол</span>
             </button>
           </div>
         ) : (
@@ -111,14 +121,14 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
       </header>
 
       <AnimatePresence>
-        {menuOpen && !tildaMode && (
+        {menuOpen && !coffeeMode && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-xl"
           >
-            <div className="flex h-full flex-col p-8">
+            <div className="flex h-full flex-col p-6 sm:p-8">
               <div className="flex justify-end">
                 <button
                   onClick={() => setMenuOpen(false)}
@@ -128,7 +138,7 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <nav className="flex flex-1 flex-col items-center justify-center gap-8">
+              <nav className="flex flex-1 flex-col items-center justify-center gap-6 sm:gap-8">
                 {navLinks.map((link, i) => (
                   <motion.a
                     key={link.href}
@@ -137,7 +147,7 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
                     onClick={() => setMenuOpen(false)}
-                    className="text-4xl font-bold tracking-tight transition-colors hover:text-accent md:text-6xl"
+                    className="text-3xl font-bold tracking-tight transition-colors hover:text-accent sm:text-4xl md:text-6xl"
                   >
                     {link.label}
                   </motion.a>
@@ -150,7 +160,7 @@ export function Navbar({ tildaMode = false }: { tildaMode?: boolean }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navLinks.length * 0.08 }}
                   onClick={() => setMenuOpen(false)}
-                  className="mt-4 flex items-center gap-2 text-xl font-medium text-accent"
+                  className="mt-4 flex items-center gap-2 text-lg font-medium text-accent sm:text-xl"
                 >
                   <TelegramIcon className="h-5 w-5" />
                   {siteConfig.telegramHandle}
