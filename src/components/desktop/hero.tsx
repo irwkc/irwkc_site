@@ -1,30 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { GitHubIcon } from "../icons/github";
 import { TelegramIcon } from "../icons/telegram";
 import { siteConfig, telegramLink } from "@/data/site";
+import { useHeroReveal } from "@/hooks/use-hero-reveal";
 import { cn } from "@/lib/utils";
 
 export function DesktopHero({ ready }: { ready: boolean }) {
-  const containerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!ready || !containerRef.current) return;
-    const el = containerRef.current;
-    // Double rAF so the browser paints opacity:0 before transitioning.
-    let raf2 = 0;
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        el.classList.add("hero-ready");
-      });
-    });
-    return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
-    };
-  }, [ready]);
+  const containerRef = useHeroReveal(ready);
 
   return (
     <section
@@ -80,7 +64,7 @@ export function DesktopHero({ ready }: { ready: boolean }) {
 
       <div
         className={cn(
-          "absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-500",
+          "absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-700 delay-500",
           ready ? "opacity-100" : "opacity-0"
         )}
       >

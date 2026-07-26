@@ -3,11 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function Preloader({ onComplete }: { onComplete: () => void }) {
+export function Preloader({
+  onReveal,
+  onComplete,
+}: {
+  onReveal: () => void;
+  onComplete: () => void;
+}) {
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
+  const onRevealRef = useRef(onReveal);
   const onCompleteRef = useRef(onComplete);
+  onRevealRef.current = onReveal;
   onCompleteRef.current = onComplete;
+  const finishedRef = useRef(false);
 
   useEffect(() => {
     document.getElementById("boot-splash")?.remove();
@@ -39,10 +48,6 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => {
-            setVisible(false);
-            setTimeout(() => onCompleteRef.current(), 420);
-          }, 160);
           return 100;
         }
         const increment =
@@ -56,12 +61,34 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (progress < 100 || finishedRef.current) return;
+    finishedRef.current = true;
+
+    // Start hero while splash is still covering the page
+    onRevealRef.current();
+
+    const exitTimer = window.setTimeout(() => {
+      setVisible(false);
+    }, 120);
+
+    const doneTimer = window.setTimeout(() => {
+      onCompleteRef.current();
+    }, 620);
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(doneTimer);
+    };
+  }, [progress]);
+
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          exit={{ opacity: 0, y: -16 }}
-          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex items-end justify-end bg-[#030712] p-8 md:p-12"
         >
           <div className="absolute inset-0 overflow-hidden">

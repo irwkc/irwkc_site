@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
-/** `null` until mounted — avoids hydration mismatch. */
+/** Resolves on the first client layout pass — home can mount under the splash. */
 export function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
     const sync = () => setIsMobile(mq.matches);
     sync();

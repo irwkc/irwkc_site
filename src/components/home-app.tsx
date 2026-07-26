@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { Preloader } from "@/components/preloader";
 import { SafariScroll } from "@/components/safari-scroll";
 import { DesktopHome } from "@/components/desktop/home";
@@ -9,7 +8,8 @@ import { MobileHome } from "@/components/mobile/home";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 
 export function HomeApp() {
-  const [ready, setReady] = useState(false);
+  const [reveal, setReveal] = useState(false);
+  const [splashDone, setSplashDone] = useState(false);
   const [coffeeMode, setCoffeeMode] = useState(false);
   const isMobile = useIsMobile(768);
 
@@ -20,21 +20,26 @@ export function HomeApp() {
   return (
     <>
       <SafariScroll />
-      <AnimatePresence>
-        {!ready && <Preloader onComplete={() => setReady(true)} />}
-      </AnimatePresence>
 
-      {isMobile === null ? null : isMobile ? (
+      {/* Home mounts under the splash so the hero is already painted */}
+      {isMobile ? (
         <MobileHome
-          ready={ready}
+          ready={reveal}
           coffeeMode={coffeeMode}
           onCoffeeActive={onCoffeeActive}
         />
       ) : (
         <DesktopHome
-          ready={ready}
+          ready={reveal}
           coffeeMode={coffeeMode}
           onCoffeeActive={onCoffeeActive}
+        />
+      )}
+
+      {!splashDone && (
+        <Preloader
+          onReveal={() => setReveal(true)}
+          onComplete={() => setSplashDone(true)}
         />
       )}
     </>
