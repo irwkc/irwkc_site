@@ -7,8 +7,7 @@ const manrope = localFont({
   variable: "--font-space-grotesk",
   weight: "200 800",
   display: "swap",
-  // Safari iOS can delay first paint until preloaded fonts finish —
-  // keep swap, skip preload so the splash shows immediately.
+  // Safari iOS delays first paint on font preload — load fonts after paint.
   preload: false,
 });
 
@@ -31,11 +30,23 @@ export const metadata: Metadata = {
   },
 };
 
-const bootCriticalCss = `
-html,body{background:#030712;margin:0}
-#boot-splash{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:flex-end;padding:2rem;background:#030712;pointer-events:none}
-#boot-splash-pct{font:700 clamp(3.5rem,12vw,6rem)/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.04em;color:rgba(248,250,252,.9)}
-`.replace(/\n/g, "");
+const bootSplashStyle = {
+  position: "fixed" as const,
+  inset: 0,
+  zIndex: 200,
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "flex-end",
+  padding: "2rem",
+  background: "#030712",
+  pointerEvents: "none" as const,
+};
+
+const bootPctStyle = {
+  font: '700 clamp(3.5rem, 12vw, 6rem)/1 ui-monospace, SFMono-Regular, Menlo, monospace',
+  letterSpacing: "-0.04em",
+  color: "rgba(248, 250, 252, 0.9)",
+};
 
 export default function RootLayout({
   children,
@@ -43,16 +54,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className="dark">
+    <html lang="ru" className="dark" style={{ background: "#030712" }}>
       <head>
-        <style dangerouslySetInnerHTML={{ __html: bootCriticalCss }} />
+        {/* Keep a tiny blocking style early for browsers that wait on head CSS */}
+        <style>{`html,body{background:#030712;margin:0}`}</style>
       </head>
       <body
         className={`${manrope.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
-        style={{ background: "#030712" }}
+        style={{ background: "#030712", margin: 0 }}
       >
-        <div id="boot-splash" aria-hidden="true">
-          <span id="boot-splash-pct">0 %</span>
+        <div id="boot-splash" aria-hidden="true" style={bootSplashStyle}>
+          <span id="boot-splash-pct" style={bootPctStyle}>
+            0 %
+          </span>
         </div>
         {children}
       </body>

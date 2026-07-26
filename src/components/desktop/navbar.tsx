@@ -69,6 +69,9 @@ export function DesktopNavbar({ coffeeMode = false }: { coffeeMode?: boolean }) 
                 src="/logo.svg"
                 alt={siteConfig.name}
                 className="h-6 w-auto md:h-7"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
               />
             </a>
 
