@@ -7,7 +7,9 @@ const manrope = localFont({
   variable: "--font-space-grotesk",
   weight: "200 800",
   display: "swap",
-  preload: true,
+  // Safari iOS can delay first paint until preloaded fonts finish —
+  // keep swap, skip preload so the splash shows immediately.
+  preload: false,
 });
 
 const jetbrainsMono = localFont({
@@ -15,7 +17,7 @@ const jetbrainsMono = localFont({
   variable: "--font-jetbrains-mono",
   weight: "100 800",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -29,6 +31,12 @@ export const metadata: Metadata = {
   },
 };
 
+const bootCriticalCss = `
+html,body{background:#030712;margin:0}
+#boot-splash{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:flex-end;padding:2rem;background:#030712;pointer-events:none}
+#boot-splash-pct{font:700 clamp(3.5rem,12vw,6rem)/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.04em;color:rgba(248,250,252,.9)}
+`.replace(/\n/g, "");
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,13 +44,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className="dark">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: bootCriticalCss }} />
+      </head>
       <body
         className={`${manrope.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
+        style={{ background: "#030712" }}
       >
-        <div id="boot-splash" className="boot-splash" aria-hidden="true">
-          <span id="boot-splash-pct" className="boot-splash-pct">
-            0 %
-          </span>
+        <div id="boot-splash" aria-hidden="true">
+          <span id="boot-splash-pct">0 %</span>
         </div>
         {children}
       </body>
