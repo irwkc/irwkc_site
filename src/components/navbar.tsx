@@ -9,14 +9,7 @@ import { siteConfig, navLinks } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (coffeeMode) setMenuOpen(false);
@@ -38,9 +31,7 @@ export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
           "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
           coffeeMode
             ? "bg-white py-2.5 shadow-sm sm:py-3"
-            : scrolled
-              ? "glass py-3"
-              : "bg-transparent py-4 sm:py-5"
+            : "bg-transparent py-4 sm:py-5"
         )}
         style={
           coffeeMode ? { fontFamily: "Arial, Helvetica, sans-serif" } : undefined
