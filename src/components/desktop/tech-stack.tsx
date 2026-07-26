@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TechTerminal } from "./tech-terminal";
+import { TechTerminal } from "../tech-terminal";
 
-export function TechStack() {
+export function DesktopTechStack() {
   return (
     <section id="tech-stack" className="section-padding relative">
       <div className="mx-auto max-w-7xl">

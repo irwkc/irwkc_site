@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, Send } from "lucide-react";
-import { GitHubIcon } from "./icons/github";
-import { TelegramIcon } from "./icons/telegram";
+import { GitHubIcon } from "../icons/github";
+import { TelegramIcon } from "../icons/telegram";
 import { siteConfig, telegramLink } from "@/data/site";
 
-export function Contact() {
+export function DesktopContact() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;

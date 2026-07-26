@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
-import { GitHubIcon } from "./icons/github";
+import { GitHubIcon } from "../icons/github";
 
 function siteLabel(url: string) {
   try {
@@ -105,7 +105,7 @@ function ProjectDetail({
   );
 }
 
-export function Projects() {
+export function DesktopProjects() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinWrapRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -141,16 +141,6 @@ export function Projects() {
       const panel = panelRef.current;
       if (!wrap || !panel) return;
 
-      if (window.innerWidth < 1024) {
-        panel.style.position = "";
-        panel.style.top = "";
-        panel.style.left = "";
-        panel.style.width = "";
-        panel.style.bottom = "";
-        wrap.style.minHeight = "";
-        return;
-      }
-
       const wrapRect = wrap.getBoundingClientRect();
       const panelH = panel.offsetHeight;
       const wrapW = wrap.offsetWidth;
@@ -184,7 +174,6 @@ export function Projects() {
     };
 
     const onScrollSpy = () => {
-      if (window.innerWidth < 1024) return;
       const probe = window.innerHeight * 0.38;
       let best = 0;
       let bestDist = Infinity;
@@ -224,12 +213,10 @@ export function Projects() {
   const selectProject = (i: number) => {
     activeRef.current = i;
     setActive(i);
-    if (window.innerWidth >= 1024) {
-      itemRefs.current[i]?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
+    itemRefs.current[i]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   };
 
   const current = projects[active];
@@ -249,60 +236,49 @@ export function Projects() {
         {!current ? (
           <div className="h-64 animate-pulse rounded-3xl border border-white/8 bg-white/3" />
         ) : (
-          <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-12">
-            <div className="flex flex-col gap-3 lg:gap-0">
+          <div className="grid grid-cols-2 items-stretch gap-12">
+            <div className="flex flex-col">
               {projects.map((project, i) => (
                 <div
                   key={project.id}
-                  className="lg:flex lg:min-h-[65vh] lg:items-center"
+                  className="flex min-h-[65vh] items-center"
                 >
-                  <div className="w-full">
-                    <button
-                      ref={(el) => {
-                        itemRefs.current[i] = el;
-                      }}
-                      type="button"
-                      onClick={() => selectProject(i)}
-                      className={cn(
-                        "group flex w-full items-center justify-between rounded-2xl border px-4 py-4 text-left transition-all duration-300 sm:px-6 sm:py-6",
-                        active === i
-                          ? "border-white/30 bg-white/[0.07] shadow-[0_0_48px_-16px_rgba(129,140,248,0.55)]"
-                          : "border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
-                      )}
-                    >
-                      <div className="min-w-0 pr-3">
-                        <p className="font-mono text-xs text-muted">
-                          {String(i + 1).padStart(2, "0")}
-                        </p>
-                        <p className="mt-1 truncate text-base font-semibold sm:text-lg md:text-xl">
-                          {project.title}
-                        </p>
-                        <p className="mt-1 text-sm text-muted">
-                          {project.category}
-                        </p>
-                      </div>
-                      <ArrowUpRight
-                        className={cn(
-                          "h-5 w-5 shrink-0 transition-transform duration-300",
-                          active === i ? "rotate-45 text-accent" : "opacity-35"
-                        )}
-                      />
-                    </button>
-
-                    {active === i && (
-                      <div className="mt-3 lg:hidden">
-                        <ProjectDetail project={project} index={i} />
-                      </div>
+                  <button
+                    ref={(el) => {
+                      itemRefs.current[i] = el;
+                    }}
+                    type="button"
+                    onClick={() => selectProject(i)}
+                    className={cn(
+                      "group flex w-full items-center justify-between rounded-2xl border px-6 py-6 text-left transition-all duration-300",
+                      active === i
+                        ? "border-white/30 bg-white/[0.07] shadow-[0_0_48px_-16px_rgba(129,140,248,0.55)]"
+                        : "border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
                     )}
-                  </div>
+                  >
+                    <div className="min-w-0 pr-3">
+                      <p className="font-mono text-xs text-muted">
+                        {String(i + 1).padStart(2, "0")}
+                      </p>
+                      <p className="mt-1 text-xl font-semibold">
+                        {project.title}
+                      </p>
+                      <p className="mt-1 text-sm text-muted">
+                        {project.category}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      className={cn(
+                        "h-5 w-5 shrink-0 transition-transform duration-300",
+                        active === i ? "rotate-45 text-accent" : "opacity-35"
+                      )}
+                    />
+                  </button>
                 </div>
               ))}
             </div>
 
-            <div
-              ref={pinWrapRef}
-              className="relative hidden h-full min-h-full lg:block"
-            >
+            <div ref={pinWrapRef} className="relative h-full min-h-full">
               <div
                 ref={panelRef}
                 className="w-full will-change-[position,top,left,width]"

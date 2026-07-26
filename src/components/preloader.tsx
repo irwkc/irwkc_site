@@ -10,6 +10,8 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
   onCompleteRef.current = onComplete;
 
   useEffect(() => {
+    document.getElementById("boot-splash")?.remove();
+
     const html = document.documentElement;
     const body = document.body;
     const prevHtmlOverflow = html.style.overflow;
@@ -32,21 +34,24 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
   }, []);
 
   useEffect(() => {
+    const boot = document.getElementById("boot-splash-pct");
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => {
             setVisible(false);
-            setTimeout(() => onCompleteRef.current(), 600);
-          }, 300);
+            setTimeout(() => onCompleteRef.current(), 420);
+          }, 160);
           return 100;
         }
         const increment =
-          prev < 70 ? Math.random() * 12 + 4 : Math.random() * 6 + 2;
-        return Math.min(100, prev + increment);
+          prev < 70 ? Math.random() * 18 + 8 : Math.random() * 10 + 4;
+        const next = Math.min(100, prev + increment);
+        if (boot) boot.textContent = `${Math.floor(next)} %`;
+        return next;
       });
-    }, 120);
+    }, 70);
 
     return () => clearInterval(interval);
   }, []);
@@ -55,21 +60,16 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     <AnimatePresence>
       {visible && (
         <motion.div
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex items-end justify-end bg-[#030712] p-8 md:p-12"
         >
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
           </div>
-          <motion.span
-            key={Math.floor(progress)}
-            initial={{ opacity: 0.5, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-6xl font-bold tracking-tighter text-white/90 md:text-8xl"
-          >
+          <span className="font-mono text-6xl font-bold tracking-tighter text-white/90 md:text-8xl">
             {Math.floor(progress)} %
-          </motion.span>
+          </span>
         </motion.div>
       )}
     </AnimatePresence>

@@ -3,17 +3,19 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 const manrope = localFont({
-  src: "../fonts/Manrope-Variable.ttf",
+  src: "../fonts/Manrope-Variable.woff2",
   variable: "--font-space-grotesk",
   weight: "200 800",
   display: "swap",
+  preload: true,
 });
 
 const jetbrainsMono = localFont({
-  src: "../fonts/JetBrainsMono-Variable.ttf",
+  src: "../fonts/JetBrainsMono-Variable.woff2",
   variable: "--font-jetbrains-mono",
   weight: "100 800",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -37,6 +39,11 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
       >
+        <div id="boot-splash" className="boot-splash" aria-hidden="true">
+          <span id="boot-splash-pct" className="boot-splash-pct">
+            0 %
+          </span>
+        </div>
         {children}
       </body>
     </html>

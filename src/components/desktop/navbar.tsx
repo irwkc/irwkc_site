@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { GitHubIcon } from "./icons/github";
-import { TelegramIcon } from "./icons/telegram";
+import { GitHubIcon } from "../icons/github";
+import { TelegramIcon } from "../icons/telegram";
 import { siteConfig, navLinks } from "@/data/site";
 import { cn } from "@/lib/utils";
 
-export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
+export function DesktopNavbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
               />
             </a>
 
-            <div className="hidden items-center gap-6 md:flex">
+            <div className="flex items-center gap-6">
               <a
                 href={siteConfig.telegram}
                 target="_blank"
@@ -99,14 +99,6 @@ export function Navbar({ coffeeMode = false }: { coffeeMode?: boolean }) {
                 <Menu className="h-4 w-4" />
               </button>
             </div>
-
-            <button
-              onClick={() => setMenuOpen(true)}
-              className="rounded-full border border-white/10 p-2.5 md:hidden"
-              aria-label="Открыть меню"
-            >
-              <Menu className="h-4 w-4" />
-            </button>
           </div>
         )}
       </header>
