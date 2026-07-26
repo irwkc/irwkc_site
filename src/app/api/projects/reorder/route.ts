@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { isAdminRequest } from "@/lib/admin-auth";
+import { rejectUnlessAdminHost } from "@/lib/admin-host";
 import { reorderProjects } from "@/lib/projects";
 
 export async function PUT(req: Request) {
+  const blocked = rejectUnlessAdminHost(req);
+  if (blocked) return blocked;
+
   if (!(await isAdminRequest())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

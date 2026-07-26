@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { isAdminRequest } from "@/lib/admin-auth";
+import { rejectUnlessAdminHost } from "@/lib/admin-host";
 import { deleteProject, updateProject, type ProjectInput } from "@/lib/projects";
 
 type Ctx = { params: Promise<{ id: string }> };
 
 export async function PUT(req: Request, ctx: Ctx) {
+  const blocked = rejectUnlessAdminHost(req);
+  if (blocked) return blocked;
+
   if (!(await isAdminRequest())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -18,7 +22,10 @@ export async function PUT(req: Request, ctx: Ctx) {
   return NextResponse.json(project);
 }
 
-export async function DELETE(_req: Request, ctx: Ctx) {
+export async function DELETE(req: Request, ctx: Ctx) {
+  const blocked = rejectUnlessAdminHost(req);
+  if (blocked) return blocked;
+
   if (!(await isAdminRequest())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

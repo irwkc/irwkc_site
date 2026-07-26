@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAdminRequest } from "@/lib/admin-auth";
+import { rejectUnlessAdminHost } from "@/lib/admin-host";
 import { createProject, readProjects, type ProjectInput } from "@/lib/projects";
 
 export async function GET() {
@@ -8,6 +9,9 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const blocked = rejectUnlessAdminHost(req);
+  if (blocked) return blocked;
+
   if (!(await isAdminRequest())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
