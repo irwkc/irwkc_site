@@ -1,47 +1,42 @@
 "use client";
 
-import { Code2, LayoutTemplate, Server, Smartphone } from "lucide-react";
 import { services } from "@/data/site";
-import { SpotlightCard } from "../bits/spotlight-card";
-
-const icons = [Code2, LayoutTemplate, Server, Smartphone];
+import { Reveal } from "./reveal";
 
 export function SiteServices() {
   return (
     <section id="services" className="section-y border-b border-graphite">
       <div className="site-container">
-        <div className="mb-10 flex flex-col gap-3 md:mb-16 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="meta-label mb-3">// Услуги</p>
-            <h2 className="section-title">Инвестируй в результат</h2>
-          </div>
-          <p className="max-w-sm text-sm leading-relaxed text-smoke md:text-right">
-            От идеи и прототипа до продакшена — с акцентом на скорость,
-            дизайн и удобство.
+        <Reveal className="mb-10 md:mb-16">
+          <p className="meta-label mb-3">Услуги</p>
+          <h2 className="section-title">Инвестируй в результат</h2>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-smoke md:text-base">
+            От идеи и прототипа до продакшена — с акцентом на скорость, дизайн
+            и удобство.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid gap-px bg-graphite md:grid-cols-2">
-          {services.map((item, i) => {
-            const Icon = icons[i] ?? Code2;
-            return (
-              <SpotlightCard
-                key={item.title}
-                className="group bg-obsidian p-7 md:p-12"
-              >
-                <Icon
-                  className="mb-6 h-7 w-7 text-gold md:mb-8 md:h-8 md:w-8"
-                  strokeWidth={1.5}
-                  aria-hidden
-                />
-                <h3 className="meta-label mb-3 text-chalk">{item.title}</h3>
-                <p className="max-w-sm text-sm leading-relaxed text-smoke">
-                  {item.text}
-                </p>
-              </SpotlightCard>
-            );
-          })}
-        </div>
+        <ul className="border-t border-graphite">
+          {services.map((item, i) => (
+            <Reveal key={item.title} delay={0.04 * i}>
+              <li className="group border-b border-graphite py-8 md:py-10">
+                <div className="grid gap-4 md:grid-cols-[88px_1fr] md:items-start md:gap-10">
+                  <span className="font-mono text-sm text-steel transition-colors duration-300 group-hover:text-steel-bright">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-xl tracking-tight text-chalk md:text-2xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-smoke md:text-base">
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </Reveal>
+          ))}
+        </ul>
       </div>
     </section>
   );

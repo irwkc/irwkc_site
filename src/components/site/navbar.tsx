@@ -66,7 +66,7 @@ function TypeLine({
       ) : (
         <span
           className={cn(
-            "ml-3 inline-block h-2 w-2 rounded-full bg-pulse transition-opacity duration-300",
+            "ml-3 inline-block h-2 w-2 rounded-full bg-steel transition-opacity duration-300",
             active ? "opacity-100" : "opacity-0"
           )}
           aria-hidden

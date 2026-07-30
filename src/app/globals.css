@@ -9,8 +9,11 @@
   --graphite: #212121;
   --iron: #474747;
   --signal: #ffffff;
-  --gold: #6f6759;
-  --pulse: #98ff38;
+  /* Orb Steel — cold highlight instead of gold / pulse-green */
+  --steel: #a8b4c0;
+  --steel-bright: #c5cdd6;
+  --gold: var(--steel);
+  --pulse: var(--steel);
   --card-surface: #1a1a1a;
 
   --background: var(--obsidian);
@@ -31,6 +34,8 @@
   --color-graphite: var(--graphite);
   --color-iron: var(--iron);
   --color-signal: var(--signal);
+  --color-steel: var(--steel);
+  --color-steel-bright: var(--steel-bright);
   --color-gold: var(--gold);
   --color-pulse: var(--pulse);
   --color-card-surface: var(--card-surface);
@@ -183,18 +188,18 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background: var(--pulse);
-  box-shadow: 0 0 0 0 rgba(152, 255, 56, 0.45);
+  background: var(--steel);
+  box-shadow: 0 0 0 0 rgba(168, 180, 192, 0.35);
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
 @keyframes pulse-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(152, 255, 56, 0.35);
+    box-shadow: 0 0 0 0 rgba(168, 180, 192, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(152, 255, 56, 0);
+    box-shadow: 0 0 0 6px rgba(168, 180, 192, 0);
   }
 }
 

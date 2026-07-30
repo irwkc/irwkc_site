@@ -5,6 +5,7 @@ import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { GitHubIcon } from "../icons/github";
+import { Reveal } from "./reveal";
 
 function siteLabel(url: string) {
   try {
@@ -23,7 +24,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={site}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-signal px-3 py-1.5 text-xs uppercase tracking-wide text-signal"
+          className="inline-flex items-center gap-1.5 rounded-full border border-steel/40 px-3 py-1.5 text-xs uppercase tracking-wide text-steel-bright transition-colors duration-300 hover:border-steel-bright hover:text-chalk"
         >
           {siteLabel(site)}
           <ExternalLink className="h-3 w-3 opacity-70" />
@@ -34,7 +35,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.appStore}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-signal px-3 py-1.5 text-xs uppercase tracking-wide text-signal"
+          className="inline-flex items-center gap-1.5 rounded-full border border-steel/40 px-3 py-1.5 text-xs uppercase tracking-wide text-steel-bright transition-colors duration-300 hover:border-steel-bright hover:text-chalk"
         >
           App Store
           <ArrowUpRight className="h-3 w-3 opacity-70" />
@@ -45,7 +46,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.repo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded border border-graphite px-3 py-1.5 text-xs text-smoke"
+          className="inline-flex items-center gap-1.5 rounded border border-graphite px-3 py-1.5 text-xs text-smoke transition-colors duration-300 hover:text-steel-bright"
         >
           <GitHubIcon className="h-3.5 w-3.5" />
           GitHub
@@ -69,8 +70,8 @@ function ProjectDetail({
   index: number;
 }) {
   return (
-    <div className="relative min-h-[320px] overflow-hidden border border-graphite bg-carbon p-7">
-      <span className="font-mono text-sm text-gold">
+    <div className="relative overflow-hidden border border-graphite bg-carbon/80 p-7">
+      <span className="font-mono text-sm text-steel">
         {String(index + 1).padStart(2, "0")}
       </span>
       <h3 className="mt-3 text-2xl tracking-tight text-chalk">
@@ -130,7 +131,7 @@ function ProjectsMobileStory({ projects }: { projects: Project[] }) {
       <div className="sticky top-[4.5rem] z-20 px-5">
         <div className="flex items-center justify-between gap-3 border border-graphite bg-obsidian/95 px-4 py-2.5">
           <p className="truncate text-sm text-chalk">
-            <span className="font-mono text-gold">
+            <span className="font-mono text-steel">
               {String(active + 1).padStart(2, "0")}
             </span>
             <span className="mx-2 text-iron">·</span>
@@ -181,10 +182,10 @@ export function SiteProjects() {
   return (
     <section id="projects" className="section-y border-b border-graphite">
       <div className="lg:hidden">
-        <div className="site-container mb-6">
-          <p className="meta-label mb-3">// Портфолио</p>
+        <Reveal className="site-container mb-6">
+          <p className="meta-label mb-3">Портфолио</p>
           <h2 className="section-title">Проекты</h2>
-        </div>
+        </Reveal>
         {!projects.length ? (
           <div className="site-container">
             <div className="h-40 animate-pulse border border-graphite bg-carbon" />
@@ -195,49 +196,51 @@ export function SiteProjects() {
       </div>
 
       <div className="site-container hidden lg:block">
-        <div className="mb-14">
-          <p className="meta-label mb-3">// Портфолио</p>
+        <Reveal className="mb-14">
+          <p className="meta-label mb-3">Портфолио</p>
           <h2 className="section-title">Проекты</h2>
-        </div>
+        </Reveal>
 
         {!projects.length ? (
           <div className="h-64 animate-pulse border border-graphite bg-carbon" />
         ) : (
           <ul className="border-t border-graphite">
             {projects.map((project, i) => (
-              <li key={project.id} className="border-b border-graphite py-10">
-                <div className="grid grid-cols-[88px_1fr_auto] items-start gap-10">
-                  <span className="font-mono text-sm text-smoke">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <h3 className="text-2xl tracking-tight text-chalk">
-                        {project.title}
-                      </h3>
-                      <span className="meta-label">{project.category}</span>
-                    </div>
-                    {project.description && (
-                      <p className="mt-3 max-w-2xl text-base leading-relaxed text-smoke">
-                        {project.description}
-                      </p>
-                    )}
-                    {project.stack?.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {project.stack.map((tech) => (
-                          <span
-                            key={tech}
-                            className="rounded border border-graphite px-2.5 py-1 text-xs text-ash"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+              <Reveal key={project.id} delay={0.03 * i}>
+                <li className="group border-b border-graphite py-10 transition-colors duration-300 hover:bg-white/[0.015]">
+                  <div className="grid grid-cols-[88px_1fr_auto] items-start gap-10">
+                    <span className="font-mono text-sm text-smoke transition-colors duration-300 group-hover:text-steel">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="transition-transform duration-300 group-hover:translate-x-1">
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <h3 className="text-2xl tracking-tight text-chalk">
+                          {project.title}
+                        </h3>
+                        <span className="meta-label">{project.category}</span>
                       </div>
-                    )}
+                      {project.description && (
+                        <p className="mt-3 max-w-2xl text-base leading-relaxed text-smoke">
+                          {project.description}
+                        </p>
+                      )}
+                      {project.stack?.length > 0 && (
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {project.stack.map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded border border-graphite px-2.5 py-1 text-xs text-ash"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <ProjectLinks project={project} />
                   </div>
-                  <ProjectLinks project={project} />
-                </div>
-              </li>
+                </li>
+              </Reveal>
             ))}
           </ul>
         )}
