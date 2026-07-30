@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
 const manrope = localFont({
   src: "../fonts/Manrope-Variable.woff2",
-  variable: "--font-space-grotesk",
+  variable: "--font-manrope",
   weight: "200 800",
   display: "swap",
-  // Safari iOS delays first paint on font preload — load fonts after paint.
   preload: false,
 });
 
@@ -19,33 +18,73 @@ const jetbrainsMono = localFont({
   preload: false,
 });
 
+const siteUrl = "https://irwkc.ru";
+
 export const metadata: Metadata = {
-  title: "irwkc | Full-Stack Developer",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "irwkc | Full-Stack Developer",
+    template: "%s | irwkc",
+  },
   description:
-    "Портфолио irwkc — Full-Stack Developer, создаю современные высокопроизводительные веб-приложения.",
+    "Портфолио irwkc — Full-Stack Developer. Современные высокопроизводительные веб-приложения с уникальным дизайном.",
+  applicationName: "irwkc",
+  authors: [{ name: "irwkc", url: siteUrl }],
+  creator: "irwkc",
+  keywords: [
+    "irwkc",
+    "full-stack",
+    "developer",
+    "Next.js",
+    "React",
+    "портфолио",
+    "веб-разработка",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "irwkc | Full-Stack Developer",
-    description: "Создаю современные высокопроизводительные веб-приложения.",
+    description:
+      "Создаю современные высокопроизводительные веб-приложения с уникальным дизайном.",
+    url: siteUrl,
+    siteName: "irwkc",
+    locale: "ru_RU",
     type: "website",
   },
+  twitter: {
+    card: "summary",
+    title: "irwkc | Full-Stack Developer",
+    description:
+      "Создаю современные высокопроизводительные веб-приложения с уникальным дизайном.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico?v=2", sizes: "48x48" },
+      { url: "/favicon.svg?v=2", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico?v=2",
+    apple: "/apple-touch-icon.png?v=2",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#101010",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 const bootSplashStyle = {
   position: "fixed" as const,
   inset: 0,
   zIndex: 200,
-  display: "flex",
-  alignItems: "flex-end",
-  justifyContent: "flex-end",
-  padding: "2rem",
-  background: "#030712",
+  background: "#101010",
   pointerEvents: "none" as const,
-};
-
-const bootPctStyle = {
-  font: '700 clamp(3.5rem, 12vw, 6rem)/1 ui-monospace, SFMono-Regular, Menlo, monospace',
-  letterSpacing: "-0.04em",
-  color: "rgba(248, 250, 252, 0.9)",
 };
 
 export default function RootLayout({
@@ -54,20 +93,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className="dark" style={{ background: "#030712" }}>
+    <html lang="ru" className="dark" style={{ background: "#101010" }}>
       <head>
-        {/* Keep a tiny blocking style early for browsers that wait on head CSS */}
-        <style>{`html,body{background:#030712;margin:0}`}</style>
+        <style>{`html,body{background:#101010;margin:0}`}</style>
       </head>
       <body
         className={`${manrope.variable} ${jetbrainsMono.variable} min-h-screen antialiased`}
-        style={{ background: "#030712", margin: 0 }}
+        style={{ background: "#101010", margin: 0 }}
       >
-        <div id="boot-splash" aria-hidden="true" style={bootSplashStyle}>
-          <span id="boot-splash-pct" style={bootPctStyle}>
-            0 %
-          </span>
-        </div>
+        <div id="boot-splash" aria-hidden="true" style={bootSplashStyle} />
         {children}
       </body>
     </html>

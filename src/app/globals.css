@@ -1,23 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712;
-  --foreground: #f8fafc;
-  --muted: #94a3b8;
-  --accent: #818cf8;
-  --accent-glow: rgba(129, 140, 248, 0.35);
-  --card: rgba(15, 23, 42, 0.6);
-  --border: rgba(148, 163, 184, 0.12);
-  --cream: #f5f0e8;
+  --obsidian: #101010;
+  --carbon: #080808;
+  --chalk: #f3f3f3;
+  --smoke: #9c9c9c;
+  --ash: #c1c1c1;
+  --graphite: #212121;
+  --iron: #474747;
+  --signal: #ffffff;
+  --gold: #6f6759;
+  --pulse: #98ff38;
+  --card-surface: #1a1a1a;
+
+  --background: var(--obsidian);
+  --foreground: var(--chalk);
+  --muted: var(--smoke);
+  --border: var(--graphite);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-cream: var(--cream);
-  --font-sans: var(--font-space-grotesk);
+  --color-obsidian: var(--obsidian);
+  --color-carbon: var(--carbon);
+  --color-chalk: var(--chalk);
+  --color-smoke: var(--smoke);
+  --color-ash: var(--ash);
+  --color-graphite: var(--graphite);
+  --color-iron: var(--iron);
+  --color-signal: var(--signal);
+  --color-gold: var(--gold);
+  --color-pulse: var(--pulse);
+  --color-card-surface: var(--card-surface);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-jetbrains-mono);
 }
 
@@ -27,10 +44,9 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--background);
+  background: var(--obsidian);
 }
 
-/* Safari: native smooth-scroll (и аналоги Lenis) часто ломают layout после прелоадера */
 html.is-safari {
   scroll-behavior: auto !important;
 }
@@ -41,172 +57,173 @@ html.is-safari body {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
-  /* clip не ломает position:sticky / pin, в отличие от overflow-x: hidden */
+  background: var(--obsidian);
+  color: var(--chalk);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-weight: 400;
   overflow-x: clip;
 }
 
-/* Режим кофейни: прячем particles, фон соседних секций не трогаем */
-html.coffee-mode [data-chrome="portfolio"] {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    opacity 0.25s ease,
-    visibility 0.25s ease;
-}
-
-.coffee-site ::selection {
-  background: rgba(111, 78, 55, 0.25);
-  color: #222;
-}
-
-/* Проявление блока из космоса */
-.coffee-site .coffee-reveal {
-  opacity: calc(0.08 + var(--coffee-reveal, 0) * 0.92);
-  filter: saturate(calc(0.2 + var(--coffee-reveal, 0) * 0.8));
-  transform: translate3d(0, calc((1 - var(--coffee-reveal, 0)) * 28px), 0);
-  will-change: opacity, filter, transform;
-}
-
-.coffee-site .coffee-fog-top {
-  height: var(--coffee-fog-top, 70vh);
-  background: linear-gradient(
-    to bottom,
-    #030712 0%,
-    #030712 28%,
-    rgba(3, 7, 18, 0.82) 55%,
-    rgba(3, 7, 18, 0) 100%
-  );
-}
-
-.coffee-site .coffee-fog-bottom {
-  height: var(--coffee-fog-bottom, 40vh);
-  background: linear-gradient(
-    to top,
-    #030712 0%,
-    #030712 30%,
-    rgba(3, 7, 18, 0.75) 60%,
-    rgba(3, 7, 18, 0) 100%
-  );
-}
-
 ::selection {
-  background: rgba(129, 140, 248, 0.35);
-  color: white;
+  background: rgba(243, 243, 243, 0.18);
+  color: var(--chalk);
 }
 
-.glass {
-  background: var(--card);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
+.site-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 20px;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@media (min-width: 768px) {
+  .site-container {
+    padding-inline: 32px;
+  }
 }
 
-.glow {
-  box-shadow: 0 0 40px var(--accent-glow);
+.section-y {
+  padding-block: 72px;
 }
 
-@keyframes float {
+@media (min-width: 768px) {
+  .section-y {
+    padding-block: 140px;
+  }
+}
+
+
+.hairline {
+  border-color: var(--graphite);
+}
+
+.display-title {
+  font-size: clamp(2.5rem, 8vw, 63px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.011em;
+  color: var(--chalk);
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 44px);
+  font-weight: 400;
+  line-height: 1.07;
+  letter-spacing: -0.007em;
+  color: var(--chalk);
+}
+
+.meta-label {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--signal);
+  color: var(--obsidian);
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.btn-pill:hover {
+  opacity: 0.88;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--signal);
+  background: transparent;
+  color: var(--signal);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--graphite);
+  border-radius: 4px;
+  background: var(--card-surface);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+.status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--pulse);
+  box-shadow: 0 0 0 0 rgba(152, 255, 56, 0.45);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
   0%,
   100% {
-    transform: translateY(0);
+    box-shadow: 0 0 0 0 rgba(152, 255, 56, 0.35);
   }
   50% {
-    transform: translateY(-12px);
+    box-shadow: 0 0 0 6px rgba(152, 255, 56, 0);
   }
 }
 
-@keyframes pulse-glow {
+@keyframes caret-blink {
   0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-@keyframes scroll-wheel {
-  0% {
+  49% {
     opacity: 1;
-    transform: translateY(0);
   }
+  50%,
   100% {
     opacity: 0;
-    transform: translateY(8px);
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.caret-blink {
+  animation: caret-blink 1.05s step-end infinite;
 }
 
-.animate-scroll-wheel {
-  animation: scroll-wheel 1.5s ease-in-out infinite;
-}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-.section-padding {
-  @apply px-4 py-16 sm:px-6 sm:py-20 md:px-12 md:py-24 lg:px-20 xl:px-32;
-}
+  .status-badge::before {
+    animation: none;
+  }
 
-/* Instant first paint before JS hydrates */
-.boot-splash {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 2rem;
-  background: #030712;
-  pointer-events: none;
-}
-
-.boot-splash-pct {
-  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
-  font-size: clamp(3.5rem, 12vw, 6rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: rgba(248, 250, 252, 0.9);
-}
-
-.hero .hero-line,
-.hero .hero-cta {
-  opacity: 0;
-  transform: translate3d(0, 22px, 0);
-  will-change: opacity, transform;
-}
-
-.hero.hero-ready .hero-line,
-.hero.hero-ready .hero-cta {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  transition:
-    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero.hero-ready .hero-line:nth-child(1) {
-  transition-delay: 0s;
-}
-.hero.hero-ready .hero-line:nth-child(2) {
-  transition-delay: 0.08s;
-}
-.hero.hero-ready .hero-line:nth-child(3) {
-  transition-delay: 0.16s;
-}
-.hero.hero-ready .hero-line:nth-child(4) {
-  transition-delay: 0.24s;
-}
-.hero.hero-ready .hero-cta {
-  transition-delay: 0.34s;
+  .caret-blink {
+    animation: none;
+    opacity: 1;
+  }
 }

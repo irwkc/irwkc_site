@@ -1,35 +1,24 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Preloader } from "@/components/preloader";
 import { SafariScroll } from "@/components/safari-scroll";
-import { DesktopHome } from "@/components/desktop/home";
+import { OrbSplash } from "@/components/orb-splash";
+import { SiteShell } from "@/components/site/shell";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 export function HomeApp() {
-  const [reveal, setReveal] = useState(false);
-  const [splashDone, setSplashDone] = useState(false);
-  const [coffeeMode, setCoffeeMode] = useState(false);
+  const reduced = useReducedMotion();
+  const [splash, setSplash] = useState(!reduced);
+  const [handoff, setHandoff] = useState(reduced);
 
-  const onCoffeeActive = useCallback((active: boolean) => {
-    setCoffeeMode(active);
-  }, []);
+  const onHandoff = useCallback(() => setHandoff(true), []);
+  const onSplashDone = useCallback(() => setSplash(false), []);
 
   return (
     <>
       <SafariScroll />
-
-      <DesktopHome
-        ready={reveal}
-        coffeeMode={coffeeMode}
-        onCoffeeActive={onCoffeeActive}
-      />
-
-      {!splashDone && (
-        <Preloader
-          onReveal={() => setReveal(true)}
-          onComplete={() => setSplashDone(true)}
-        />
-      )}
+      {splash && <OrbSplash onHandoff={onHandoff} onDone={onSplashDone} />}
+      <SiteShell intro={!handoff} />
     </>
   );
 }

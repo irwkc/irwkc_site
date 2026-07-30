@@ -1,37 +1,32 @@
-# irwkc — 3D Portfolio
+# irwkc — Portfolio
 
-Personal portfolio inspired by [nareshkhatri.site](https://nareshkhatri.site) with 3D tech keyboard, GSAP animations, and space theme.
+Personal portfolio at [irwkc.ru](https://irwkc.ru). Admin: [irwkc.irwkc.ru](https://irwkc.irwkc.ru).
+
+Visual language inspired by Hyperstudio (obsidian canvas, hairline structure). Interactive accents from React Bits: ASCII text, Dot Grid, Orb.
 
 ## Stack
 
 - Next.js 16 · TypeScript · Tailwind CSS v4
-- Three.js · React Three Fiber · Drei
-- GSAP · Framer Motion
+- Framer Motion · Three.js · OGL
+- Standalone Node deploy behind nginx
 
 ## Run locally
 
 ```bash
+cp .env.example .env.local
+# set ADMIN_PASSWORD and ADMIN_SECRET
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+## Content
 
-## Customize content
+- Site copy / links / services: `src/data/site.ts`
+- Projects: `data/projects.json` (also editable in admin)
 
-Edit `src/data/site.ts` — name, email, tech stack, experience, projects.
-
-## Deploy
-
-Push to GitHub and deploy on [Vercel](https://vercel.com).
+## Production
 
 ```bash
 npm run build
+npm start
 ```
-
-## Next steps
-
-- [ ] Replace mock projects with real ones
-- [ ] Add resume PDF link
-- [ ] Wire contact form (Resend / Formspree)
-- [ ] Custom 3D model in Spline (optional upgrade)

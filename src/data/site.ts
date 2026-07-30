@@ -5,7 +5,6 @@ export const siteConfig = {
   github: "https://github.com/irwkc/",
   telegram: "https://t.me/irwkc",
   telegramHandle: "@irwkc",
-  yearsExperience: 5,
   tagline:
     "Создаю современные высокопроизводительные веб-приложения. Каждое имеет свой уникальный дизайн и индивидуальные механики взаимодействия с пользователем, чтобы ваш сайт точно запомнился.",
 };
@@ -17,82 +16,42 @@ export function telegramLink(text?: string) {
 }
 
 export const navLinks = [
+  { label: "Услуги", href: "#services" },
   { label: "Проекты", href: "#projects" },
   { label: "Стек", href: "#tech-stack" },
   { label: "Контакты", href: "#contact" },
 ];
 
+export const services = [
+  {
+    title: "Веб-приложения",
+    text: "Интерфейсы на React и Next.js с чистой архитектурой, быстрой загрузкой и продуманным UX.",
+  },
+  {
+    title: "Лендинги и бренд-сайты",
+    text: "Сайты с уникальной визуальной системой и механиками, которые запоминаются.",
+  },
+  {
+    title: "Full-stack и API",
+    text: "Node.js, базы данных и админки — от прототипа до стабильного продакшена.",
+  },
+  {
+    title: "iOS и мобильное",
+    text: "Нативные клиенты и связка веб ↔ приложение, когда продукту нужен выход за пределы браузера.",
+  },
+];
+
 export const techStack = [
-  {
-    name: "TypeScript",
-    color: "#3178C6",
-    short: "TS",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-  },
-  {
-    name: "React",
-    color: "#61DAFB",
-    short: "⚛",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-  },
-  {
-    name: "Next.js",
-    color: "#ffffff",
-    short: "N",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-  },
-  {
-    name: "Node.js",
-    color: "#339933",
-    short: "Nd",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-  },
-  {
-    name: "Express",
-    color: "#ffffff",
-    short: "Ex",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-  },
-  {
-    name: "Python",
-    color: "#3776AB",
-    short: "Py",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-  },
-  {
-    name: "PostgreSQL",
-    color: "#4169E1",
-    short: "PG",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-  },
-  {
-    name: "Prisma",
-    color: "#2D3748",
-    short: "Pr",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg",
-  },
-  {
-    name: "Tailwind",
-    color: "#06B6D4",
-    short: "Tw",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-  },
-  {
-    name: "Swift",
-    color: "#F05138",
-    short: "Sw",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
-  },
-  {
-    name: "Kotlin",
-    color: "#7F52FF",
-    short: "Kt",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
-  },
-  {
-    name: "Docker",
-    color: "#2496ED",
-    short: "Dk",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-  },
+  { name: "TypeScript", short: "TS" },
+  { name: "React", short: "R" },
+  { name: "Next.js", short: "N" },
+  { name: "Node.js", short: "Nd" },
+  { name: "Express", short: "Ex" },
+  { name: "Python", short: "Py" },
+  { name: "PostgreSQL", short: "PG" },
+  { name: "Prisma", short: "Pr" },
+  { name: "Tailwind", short: "Tw" },
+  { name: "Swift", short: "Sw" },
+  { name: "Kotlin", short: "Kt" },
+  { name: "Docker", short: "Dk" },
 ];

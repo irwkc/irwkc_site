@@ -5,15 +5,24 @@ export const ADMIN_COOKIE = "irwkc_admin";
 const MAX_AGE = 60 * 60 * 24 * 14; // 14 days
 
 function secret() {
-  return (
+  const value =
     process.env.ADMIN_SECRET ||
     process.env.ADMIN_PASSWORD ||
-    "irwkc-dev-admin-secret"
-  );
+    (process.env.NODE_ENV === "production" ? "" : "irwkc-dev-admin-secret");
+  if (!value) {
+    throw new Error("ADMIN_SECRET is required in production");
+  }
+  return value;
 }
 
 function expectedPassword() {
-  return process.env.ADMIN_PASSWORD || "irwkc";
+  const value =
+    process.env.ADMIN_PASSWORD ||
+    (process.env.NODE_ENV === "production" ? "" : "irwkc");
+  if (!value) {
+    throw new Error("ADMIN_PASSWORD is required in production");
+  }
+  return value;
 }
 
 function sign(value: string) {
