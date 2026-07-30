@@ -76,9 +76,8 @@ export function OrbSplash({
             transition={{ duration: 0.9, ease }}
           />
 
-          {/* Mirrors hero: absolute inset-[-10%] opacity-70/80 */}
           <motion.div
-            className="absolute inset-[-10%] md:opacity-80"
+            className="absolute inset-[-10%]"
             initial={{ scale: 0.12, opacity: 0.4 }}
             animate={{
               scale: 1,
@@ -94,10 +93,11 @@ export function OrbSplash({
             style={{ transformOrigin: "50% 45%" }}
           >
             <Orb
-              hue={30}
-              hoverIntensity={0.25}
-              forceHoverState
-              backgroundColor="#101010"
+              hue={0}
+              hoverIntensity={2}
+              rotateOnHover
+              forceHoverState={false}
+              backgroundColor="#000000"
             />
           </motion.div>
         </motion.div>

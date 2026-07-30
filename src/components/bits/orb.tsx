@@ -17,7 +17,7 @@ export function Orb({
   hoverIntensity = 0.2,
   rotateOnHover = true,
   forceHoverState = false,
-  backgroundColor = '#101010',
+  backgroundColor = '#000000',
   className = '',
 }: OrbProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
@@ -214,7 +214,7 @@ export function Orb({
           value: new Vec3(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
         },
         hue: { value: hue },
-        hover: { value: 0 },
+        hover: { value: forceHoverState ? 1 : 0 },
         rot: { value: 0 },
         hoverIntensity: { value: hoverIntensity },
         backgroundColor: { value: hexToVec3(backgroundColor) }
@@ -277,7 +277,12 @@ export function Orb({
       program.uniforms.hoverIntensity.value = hoverIntensity;
 
       const effectiveHover = forceHoverState ? 1 : targetHover;
-      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.1;
+      if (forceHoverState) {
+        program.uniforms.hover.value = 1;
+      } else {
+        program.uniforms.hover.value +=
+          (effectiveHover - program.uniforms.hover.value) * 0.1;
+      }
 
       if (rotateOnHover && effectiveHover > 0.5) {
         currentRot += dt * rotationSpeed;

@@ -17,20 +17,21 @@ export function SiteHero({ intro = false }: { intro?: boolean }) {
 
   return (
     <section className="relative flex min-h-[100dvh] flex-col justify-end overflow-hidden border-b border-graphite">
-      {/* Orb stays put — splash morphs into this layer */}
+      {/* Orb — React Bits defaults; pointer-events so hover works */}
       <div className="pointer-events-none absolute inset-0">
         {!reduced && (
-          <div className="absolute inset-[-10%] opacity-70 md:opacity-80">
+          <div className="pointer-events-auto absolute inset-[-10%] opacity-70 md:opacity-80">
             <Orb
-              hue={30}
-              hoverIntensity={0.25}
-              forceHoverState
-              backgroundColor="#101010"
+              hue={0}
+              hoverIntensity={2}
+              rotateOnHover
+              forceHoverState={false}
+              backgroundColor="#000000"
             />
           </div>
         )}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/75 to-obsidian/25"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/75 to-obsidian/25"
           initial={false}
           animate={{ opacity: intro ? 0 : 1 }}
           transition={{ duration: 0.95, ease, delay: intro ? 0 : 0.08 }}
